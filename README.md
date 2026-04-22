@@ -1,10 +1,10 @@
 # Final Project: Dual Implementation of an Expense Approval Workflow
 
 **Name:** Damis Gabriel Manfouo
-**Student Number:** [STUDENT_NUMBER_PLACEHOLDER]
+**Student Number:** 041204270
 **Course:** CST8917 — Serverless Applications | Algonquin College
 **Project Title:** Compare & Contrast — Azure Durable Functions vs. Logic Apps + Service Bus
-**Date:** April 22, 2026
+**Date:** April 21, 2026
 
 ---
 
@@ -83,4 +83,4 @@ In short: Logic Apps for speed, simplicity, and accessibility; Durable Functions
 
 ## AI Disclosure
 
-Claude Code was used to scaffold the repository structure, generate initial function implementations, assist with Logic App workflow design, and debug runtime errors throughout development. All logic was reviewed, tested, and modified by the student. The comparison analysis and reflection paragraphs reflect the student's direct experience building and testing both versions.
+Claude Code was used to scaffold the repository structure, assist with Logic App workflow design, and debug runtime errors throughout development. All logic was reviewed, tested, and modified by the student. The comparison analysis and reflection paragraphs reflect the student's direct experience building and testing both versions.
