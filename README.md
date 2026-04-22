@@ -1,10 +1,10 @@
 # Final Project: Dual Implementation of an Expense Approval Workflow
 
-**Name:** Damis Gabriel Manfouo
-**Student Number:** 041204270
-**Course:** CST8917 — Serverless Applications | Algonquin College
-**Project Title:** Compare & Contrast — Azure Durable Functions vs. Logic Apps + Service Bus
-**Date:** April 21, 2026
+## **Name:** Damis Gabriel Manfouo
+## **Student Number:** 041204270
+## **Course:** CST8917 — Serverless Applications | Algonquin College
+## **Project Title:** Compare & Contrast — Azure Durable Functions vs. Logic Apps + Service Bus
+## **Date:** April 21, 2026
 
 ---
 
