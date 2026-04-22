@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
   "employee_name": "Bob Chen",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 450.00,
   "category": "travel",
   "description": "Conference flight",
@@ -49,7 +49,7 @@ Content-Type: application/json
 ###
 
 # Step 2b — manager approves (replace <instanceId> with the id from step 2a)
-@instanceId2 = e0398f13d1394f48a79d987c619cd9d9
+@instanceId2 = ca3ac0dac6cc4039b53bebc926b9a7fc
 
 POST {{baseUrl}}/expense/{{instanceId2}}/respond
 Content-Type: application/json
@@ -69,7 +69,7 @@ Content-Type: application/json
 
 {
   "employee_name": "Carol Lee",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 1200.00,
   "category": "equipment",
   "description": "Ergonomic monitor",
@@ -79,7 +79,7 @@ Content-Type: application/json
 ###
 
 # Step 3b — manager rejects (replace <instanceId> with the id from step 3a)
-@instanceId3 = 521e38c0c4d64b749debdee7ffc2ffb9
+@instanceId3 = 03f03095e7cb46fcbe263f49eac4ff50
 
 POST {{baseUrl}}/expense/{{instanceId3}}/respond
 Content-Type: application/json
@@ -106,7 +106,7 @@ Content-Type: application/json
 
 {
   "employee_name": "David Kim",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 800.00,
   "category": "software",
   "description": "Annual IDE license",
@@ -122,10 +122,11 @@ Content-Type: application/json
 
 {
   "employee_name": "Eve Torres",
+  "employee_email": "employee_email",
   "amount": 200.00,
   "category": "supplies",
   "description": "Office supplies",
-  "manager_email": "manager@example.com"
+  
 }
 
 # Missing: employee_email
@@ -140,7 +141,7 @@ Content-Type: application/json
 
 {
   "employee_name": "Frank Nguyen",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 75.00,
   "category": "lunch",
   "description": "Team lunch",

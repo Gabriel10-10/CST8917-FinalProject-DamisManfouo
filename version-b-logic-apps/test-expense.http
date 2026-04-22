@@ -19,7 +19,7 @@
 
 @namespace = finalservicebus.servicebus.windows.net
 @queue = expense-requests
-@bearerToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlUxc1g4WUZIUzdaNlZsN1ZITEl6VGVqYnZqMCIsImtpZCI6IlUxc1g4WUZIUzdaNlZsN1ZITEl6VGVqYnZqMCJ9.eyJhdWQiOiJodHRwczovL3NlcnZpY2VidXMuYXp1cmUubmV0IiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZWMxYmQ5MjQtMGE2YS00YWE5LWFhODktYzk4MDMxNmMwNDQ5LyIsImlhdCI6MTc3NjgyMzA1MSwibmJmIjoxNzc2ODIzMDUxLCJleHAiOjE3NzY4Mjc4NzcsImFjciI6IjEiLCJhaW8iOiJBWFFBaS84YkFBQUEyK2NsTE9oMEFIbmYxa1ppRkRxc1dDQkl5WVB6NG9jSDF6WWZvU21FV0JkSkwrMC9mQUd5ZVRDUERrRVVWalpvY3o2VWpybDNwY3RINEQ4Y3FoTkx5SnBpOWVwUVNvK0o1cUhIUW13OWdES0tyMm1pV3J1VlRLTkorVnNGQm1TZktRUDFVYXl5b1IxUDdhNXBWaThrSVE9PSIsImFtciI6WyJwd2QiLCJyc2EiLCJtZmEiXSwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjE0Nzc2OGEwLTlhNzItNGZkZS1hYTg4LTdhZDRhMzM2M2RlNSIsImZhbWlseV9uYW1lIjoiTWFuZm91byIsImdpdmVuX25hbWUiOiJEYW1pc2dhYnJpZWwiLCJncm91cHMiOlsiMDMzZDAwM2EtYjg4ZC00NDJlLWE0ZjktMGRlMjIwMzg3ZWU5IiwiNDAyMTdkMDMtMWUyOC00YmQyLThhMjUtNTczNWVkZjMxMzI4IiwiNDAzZTdkNjEtOTQyZS00NjJmLTkzOTItOGJmMDIxMzIxYTMyIiwiYjM3ZGNkZmEtMTgxNy00ZjIzLWEwOTItZDcxMzk4NDM4ZDJjIiwiMjIzZTFkMzEtODQ0ZS00M2FjLTk1YjctZTc1MmJjNjAyOGNiIiwiZTNiZGIyZTYtNmFlYS00Mjk4LTk0MzUtYjcxYmEyYzEwMzk5IiwiYTA4ZGMwMTctODdkOS00MTY0LWE2YmQtY2I3MDc4OWRjNzhkIiwiZTRkMzQ1OTYtODY3Zi00MTk5LTlhYmYtOGI0ODljZGVmOWFiIiwiYzg0ZjYzMTYtNTQ2Zi00YWJhLWE1ODAtN2JlMzlmNjA1MWQ4IiwiMmQ2MWUxOGUtNGMxNS00YzIyLTljNWYtYTA1ZDdmMDUxYmRjIl0sImlkdHlwIjoidXNlciIsImlwYWRkciI6IjE3NC4xMTUuMjU0LjIyNSIsIm5hbWUiOiJEYW1pc2dhYnJpZWwgTWFuZm91byIsIm9pZCI6ImMxYzFmODJmLWQ5OWMtNDA2Yy04MWJkLThjMjMzYzI2ODRmOCIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0xOTg5NDgzNjk0LTMyNjM5OTI1Mi05NDM3NTA3OTgtNzg0NjEyIiwicHVpZCI6IjEwMDMyMDA0Qzk4OTAyQzUiLCJyaCI6IjEuQVFnQUpOa2I3R29LcVVxcWljbUFNV3dFU2ZrT29ZQm9nVDFKcV9reWw4VHZianpYQUdnSUFBLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInNpZCI6IjAwOGIwOWQ5LTEwMjYtODcyNy1hMDcyLTg5MGFjOTc3M2I1YSIsInN1YiI6InJWZ2w4M04zcW82ZlNhaGtkQ3RHWDZzcTY0UTZobTJGdE9mbWhfcFhPZXMiLCJ0aWQiOiJlYzFiZDkyNC0wYTZhLTRhYTktYWE4OS1jOTgwMzE2YzA0NDkiLCJ1bmlxdWVfbmFtZSI6Im1hbmYwMDA3QGFsZ29ucXVpbmxpdmUuY29tIiwidXBuIjoibWFuZjAwMDdAYWxnb25xdWlubGl2ZS5jb20iLCJ1dGkiOiJmVUtrSjZFY2xVR0RhQzc0YWtnOUFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXSwieG1zX2FjdF9mY3QiOiIzIDUiLCJ4bXNfZnRkIjoic2RPaWZfMUo5cHFUQmJOY3U1S3RabVdRTUM2YjZzM0JvbGVwdjU5b3B1MEJkWE51YjNKMGFDMWtjMjF6IiwieG1zX2lkcmVsIjoiMSA4IiwieG1zX3N1Yl9mY3QiOiI0IDMifQ.dRM23O1vW2paVYF3XKwdIbT8e-wUrzV99qYuG4hEIzY3tVIjxCWC2d084UQK3MZ9UGLvSXOAQd5ol6vBu8Vimd0FICdt1sA5bzA8soeQ4_Mveg_gNwQVOdFSjwq7WOxGtWDQsUVV1h0NsOeq9hF6aVYITFIl42yvoP-C-zybPLKSzTsbL6RvDDP_qMX6-TD6iSLa-ue-xWwG7O__Gx4G1sYMN1Dv3eU6lCk7_ffWK8tHdD7_F1KrGQhSCRn8kDR_WyiK7jR59NDyXyAoYIBUlmrv3pk7aBkJg1fQsyiKVMapdBfusi2g8hE10LCZz4MV67kLcYlmbU9CmkOfYaDuAA
+@bearerToken = token
 
 ###############################################################################
 # Scenario 1: Valid expense UNDER $100 → auto-approved (no manager needed)
@@ -32,11 +32,11 @@ BrokerProperties: {"Label": "expense-request"}
 
 {
   "employee_name": "Alice Martin",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 45.00,
   "category": "meals",
   "description": "Team lunch",
-  "manager_email": "manf0007@algonquinlive.com"
+  "manager_email": "manager_email"
 }
 
 # Expected: Logic App runs → validation passes → amount < 100 → approved
@@ -53,11 +53,11 @@ BrokerProperties: {"Label": "expense-request"}
 
 {
   "employee_name": "Bob Chen",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 450.00,
   "category": "travel",
   "description": "Conference flight",
-  "manager_email": "manf0007@algonquinlive.com"
+  "manager_email": "manager_email"
 }
 
 # Expected: Logic App pauses at HTTP Webhook → manager calls callback URL → approved
@@ -74,11 +74,11 @@ BrokerProperties: {"Label": "expense-request"}
 
 {
   "employee_name": "Carol Lee",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 1200.00,
   "category": "equipment",
   "description": "Ergonomic monitor",
-  "manager_email": "manf0007@algonquinlive.com"
+  "manager_email": "manager_email"
 }
 
 # Expected: Logic App pauses at HTTP Webhook → manager rejects → rejected
@@ -102,11 +102,11 @@ BrokerProperties: {"Label": "expense-request"}
 
 {
   "employee_name": "David Kim",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 800.00,
   "category": "software",
   "description": "Annual IDE license",
-  "manager_email": "manf0007@algonquinlive.com"
+  "manager_email": "manager_email"
 }
 
 ###############################################################################
@@ -120,10 +120,10 @@ BrokerProperties: {"Label": "expense-request"}
 
 {
   "employee_name": "Eve Torres",
+  "employee_email": "employee_email",
   "amount": 200.00,
   "category": "supplies",
-  "description": "Office supplies",
-  "manager_email": "manf0007@algonquinlive.com"
+  "manager_email": "manager_email"
 }
 
 # Missing: employee_email
@@ -141,11 +141,11 @@ BrokerProperties: {"Label": "expense-request"}
 
 {
   "employee_name": "Frank Nguyen",
-  "employee_email": "manfouodamis00@gmail.com",
+  "employee_email": "employee_email",
   "amount": 75.00,
   "category": "lunch",
   "description": "Team lunch",
-  "manager_email": "manf0007@algonquinlive.com"
+  "manager_email": "manager_email"
 }
 
 # "lunch" is not in VALID_CATEGORIES.

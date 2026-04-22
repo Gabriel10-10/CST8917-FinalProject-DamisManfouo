@@ -23,7 +23,7 @@ project.lock.json
 .secrets
 appsettings.json
 local.settings.json
-
+generate_pptx.py
 node_modules
 dist
 
