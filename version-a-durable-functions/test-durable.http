@@ -1,0 +1,151 @@
+# test-durable.http — Version A: Azure Durable Functions
+# Use with the VS Code REST Client extension.
+# Prerequisites:
+#   1. Copy local.settings.example.json → local.settings.json and fill in values.
+#   2. Start Azurite (local storage emulator): azurite --silent
+#   3. Run: func start  (from the version-a-durable-functions/ directory)
+#
+# Tip: set APPROVAL_TIMEOUT_SECONDS=30 in local.settings.json for fast escalation testing.
+
+@baseUrl = https://version-a-durable-functions-cxhxgaaffwd6a4hf.westus-01.azurewebsites.net/api
+
+###############################################################################
+# Scenario 1: Valid expense UNDER $100 → auto-approved (no manager needed)
+###############################################################################
+
+# @name scenario1
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "employee_name": "Alice Martin",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 45.00,
+  "category": "meals",
+  "description": "Team lunch",
+  "manager_email": "manager@example.com"
+}
+
+# After sending: follow the statusQueryGetUri from the response to confirm status = "approved".
+
+###############################################################################
+# Scenario 2: Valid expense >= $100, manager APPROVES
+###############################################################################
+
+# Step 2a — submit the expense (save the instanceId from the response)
+# @name scenario2_submit
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "employee_name": "Bob Chen",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 450.00,
+  "category": "travel",
+  "description": "Conference flight",
+  "manager_email": "manager@example.com"
+}
+
+###
+
+# Step 2b — manager approves (replace <instanceId> with the id from step 2a)
+@instanceId2 = e0398f13d1394f48a79d987c619cd9d9
+
+POST {{baseUrl}}/expense/{{instanceId2}}/respond
+Content-Type: application/json
+
+{
+  "decision": "approved"
+}
+
+###############################################################################
+# Scenario 3: Valid expense >= $100, manager REJECTS
+###############################################################################
+
+# Step 3a — submit the expense
+# @name scenario3_submit
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "employee_name": "Carol Lee",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 1200.00,
+  "category": "equipment",
+  "description": "Ergonomic monitor",
+  "manager_email": "manager@example.com"
+}
+
+###
+
+# Step 3b — manager rejects (replace <instanceId> with the id from step 3a)
+@instanceId3 = 521e38c0c4d64b749debdee7ffc2ffb9
+
+POST {{baseUrl}}/expense/{{instanceId3}}/respond
+Content-Type: application/json
+
+{
+  "decision": "rejected"
+}
+
+###############################################################################
+# Scenario 4: Valid expense >= $100, NO manager response → escalated
+#
+# HOW TO TEST:
+#   1. Send the request below and note the instanceId from the response.
+#   2. Do NOT send a manager response.
+#   3. Wait longer than APPROVAL_TIMEOUT_SECONDS (default: 120 seconds).
+#      If you set it to 30s in local.settings.json, wait ~35 seconds.
+#   4. Call the statusQueryGetUri from the original response.
+#   5. Confirm the output contains: "status": "escalated"
+###############################################################################
+
+# @name scenario4_submit
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "employee_name": "David Kim",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 800.00,
+  "category": "software",
+  "description": "Annual IDE license",
+  "manager_email": "manager@example.com"
+}
+
+###############################################################################
+# Scenario 5: Missing required field → 400 validation error
+###############################################################################
+
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "employee_name": "Eve Torres",
+  "amount": 200.00,
+  "category": "supplies",
+  "description": "Office supplies",
+  "manager_email": "manager@example.com"
+}
+
+# Missing: employee_email
+# Expected: HTTP 400 with {"error": "Missing required fields: employee_email"}
+
+###############################################################################
+# Scenario 6: Invalid category → 400 validation error
+###############################################################################
+
+POST {{baseUrl}}/expense
+Content-Type: application/json
+
+{
+  "employee_name": "Frank Nguyen",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 75.00,
+  "category": "lunch",
+  "description": "Team lunch",
+  "manager_email": "manager@example.com"
+}
+
+# "lunch" is not in VALID_CATEGORIES.
+# Expected: HTTP 400 with {"error": "Invalid category 'lunch'. Valid: [...]"}

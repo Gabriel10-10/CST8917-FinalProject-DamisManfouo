@@ -1,0 +1,153 @@
+# test-expense.http — Version B: Logic Apps + Service Bus
+# Use with the VS Code REST Client extension.
+#
+# HOW TESTING WORKS FOR VERSION B:
+#   Each scenario sends a JSON message to the Service Bus queue "expense-requests".
+#   The Logic App triggers automatically, runs the full workflow, and produces a result.
+#   After sending each message, go to:
+#     Azure Portal → FinalLogicApp → Run history → open the run → screenshot each branch.
+#
+# HOW TO GET YOUR BEARER TOKEN:
+#   Run this in your terminal (requires az login):
+#   az account get-access-token --resource https://servicebus.azure.net --query accessToken -o tsv
+#   Copy the output and paste it as @bearerToken below.
+#   Token expires in ~1 hour — re-run the command to refresh it.
+#
+# HOW TO GET YOUR NAMESPACE:
+#   Azure Portal → Service Bus namespace → Overview → copy the "Host name"
+#   It looks like: finalservicebus.servicebus.windows.net
+
+@namespace = finalservicebus.servicebus.windows.net
+@queue = expense-requests
+@bearerToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlUxc1g4WUZIUzdaNlZsN1ZITEl6VGVqYnZqMCIsImtpZCI6IlUxc1g4WUZIUzdaNlZsN1ZITEl6VGVqYnZqMCJ9.eyJhdWQiOiJodHRwczovL3NlcnZpY2VidXMuYXp1cmUubmV0IiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZWMxYmQ5MjQtMGE2YS00YWE5LWFhODktYzk4MDMxNmMwNDQ5LyIsImlhdCI6MTc3NjgyMzA1MSwibmJmIjoxNzc2ODIzMDUxLCJleHAiOjE3NzY4Mjc4NzcsImFjciI6IjEiLCJhaW8iOiJBWFFBaS84YkFBQUEyK2NsTE9oMEFIbmYxa1ppRkRxc1dDQkl5WVB6NG9jSDF6WWZvU21FV0JkSkwrMC9mQUd5ZVRDUERrRVVWalpvY3o2VWpybDNwY3RINEQ4Y3FoTkx5SnBpOWVwUVNvK0o1cUhIUW13OWdES0tyMm1pV3J1VlRLTkorVnNGQm1TZktRUDFVYXl5b1IxUDdhNXBWaThrSVE9PSIsImFtciI6WyJwd2QiLCJyc2EiLCJtZmEiXSwiYXBwaWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjE0Nzc2OGEwLTlhNzItNGZkZS1hYTg4LTdhZDRhMzM2M2RlNSIsImZhbWlseV9uYW1lIjoiTWFuZm91byIsImdpdmVuX25hbWUiOiJEYW1pc2dhYnJpZWwiLCJncm91cHMiOlsiMDMzZDAwM2EtYjg4ZC00NDJlLWE0ZjktMGRlMjIwMzg3ZWU5IiwiNDAyMTdkMDMtMWUyOC00YmQyLThhMjUtNTczNWVkZjMxMzI4IiwiNDAzZTdkNjEtOTQyZS00NjJmLTkzOTItOGJmMDIxMzIxYTMyIiwiYjM3ZGNkZmEtMTgxNy00ZjIzLWEwOTItZDcxMzk4NDM4ZDJjIiwiMjIzZTFkMzEtODQ0ZS00M2FjLTk1YjctZTc1MmJjNjAyOGNiIiwiZTNiZGIyZTYtNmFlYS00Mjk4LTk0MzUtYjcxYmEyYzEwMzk5IiwiYTA4ZGMwMTctODdkOS00MTY0LWE2YmQtY2I3MDc4OWRjNzhkIiwiZTRkMzQ1OTYtODY3Zi00MTk5LTlhYmYtOGI0ODljZGVmOWFiIiwiYzg0ZjYzMTYtNTQ2Zi00YWJhLWE1ODAtN2JlMzlmNjA1MWQ4IiwiMmQ2MWUxOGUtNGMxNS00YzIyLTljNWYtYTA1ZDdmMDUxYmRjIl0sImlkdHlwIjoidXNlciIsImlwYWRkciI6IjE3NC4xMTUuMjU0LjIyNSIsIm5hbWUiOiJEYW1pc2dhYnJpZWwgTWFuZm91byIsIm9pZCI6ImMxYzFmODJmLWQ5OWMtNDA2Yy04MWJkLThjMjMzYzI2ODRmOCIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0xOTg5NDgzNjk0LTMyNjM5OTI1Mi05NDM3NTA3OTgtNzg0NjEyIiwicHVpZCI6IjEwMDMyMDA0Qzk4OTAyQzUiLCJyaCI6IjEuQVFnQUpOa2I3R29LcVVxcWljbUFNV3dFU2ZrT29ZQm9nVDFKcV9reWw4VHZianpYQUdnSUFBLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInNpZCI6IjAwOGIwOWQ5LTEwMjYtODcyNy1hMDcyLTg5MGFjOTc3M2I1YSIsInN1YiI6InJWZ2w4M04zcW82ZlNhaGtkQ3RHWDZzcTY0UTZobTJGdE9mbWhfcFhPZXMiLCJ0aWQiOiJlYzFiZDkyNC0wYTZhLTRhYTktYWE4OS1jOTgwMzE2YzA0NDkiLCJ1bmlxdWVfbmFtZSI6Im1hbmYwMDA3QGFsZ29ucXVpbmxpdmUuY29tIiwidXBuIjoibWFuZjAwMDdAYWxnb25xdWlubGl2ZS5jb20iLCJ1dGkiOiJmVUtrSjZFY2xVR0RhQzc0YWtnOUFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXSwieG1zX2FjdF9mY3QiOiIzIDUiLCJ4bXNfZnRkIjoic2RPaWZfMUo5cHFUQmJOY3U1S3RabVdRTUM2YjZzM0JvbGVwdjU5b3B1MEJkWE51YjNKMGFDMWtjMjF6IiwieG1zX2lkcmVsIjoiMSA4IiwieG1zX3N1Yl9mY3QiOiI0IDMifQ.dRM23O1vW2paVYF3XKwdIbT8e-wUrzV99qYuG4hEIzY3tVIjxCWC2d084UQK3MZ9UGLvSXOAQd5ol6vBu8Vimd0FICdt1sA5bzA8soeQ4_Mveg_gNwQVOdFSjwq7WOxGtWDQsUVV1h0NsOeq9hF6aVYITFIl42yvoP-C-zybPLKSzTsbL6RvDDP_qMX6-TD6iSLa-ue-xWwG7O__Gx4G1sYMN1Dv3eU6lCk7_ffWK8tHdD7_F1KrGQhSCRn8kDR_WyiK7jR59NDyXyAoYIBUlmrv3pk7aBkJg1fQsyiKVMapdBfusi2g8hE10LCZz4MV67kLcYlmbU9CmkOfYaDuAA
+
+###############################################################################
+# Scenario 1: Valid expense UNDER $100 → auto-approved (no manager needed)
+###############################################################################
+
+POST https://{{namespace}}/{{queue}}/messages
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+BrokerProperties: {"Label": "expense-request"}
+
+{
+  "employee_name": "Alice Martin",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 45.00,
+  "category": "meals",
+  "description": "Team lunch",
+  "manager_email": "manf0007@algonquinlive.com"
+}
+
+# Expected: Logic App runs → validation passes → amount < 100 → approved
+# Screenshot: Logic App run history showing auto-approve branch + email received.
+
+###############################################################################
+# Scenario 2: Valid expense >= $100, manager APPROVES
+###############################################################################
+
+POST https://{{namespace}}/{{queue}}/messages
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+BrokerProperties: {"Label": "expense-request"}
+
+{
+  "employee_name": "Bob Chen",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 450.00,
+  "category": "travel",
+  "description": "Conference flight",
+  "manager_email": "manf0007@algonquinlive.com"
+}
+
+# Expected: Logic App pauses at HTTP Webhook → manager calls callback URL → approved
+# Screenshot: Logic App run showing approved branch + email received.
+
+###############################################################################
+# Scenario 3: Valid expense >= $100, manager REJECTS
+###############################################################################
+
+POST https://{{namespace}}/{{queue}}/messages
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+BrokerProperties: {"Label": "expense-request"}
+
+{
+  "employee_name": "Carol Lee",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 1200.00,
+  "category": "equipment",
+  "description": "Ergonomic monitor",
+  "manager_email": "manf0007@algonquinlive.com"
+}
+
+# Expected: Logic App pauses at HTTP Webhook → manager rejects → rejected
+# Screenshot: Logic App run showing rejected branch + email received.
+
+###############################################################################
+# Scenario 4: Valid expense >= $100, NO manager response → escalated
+#
+# HOW TO TEST:
+#   1. Send this message.
+#   2. Do NOT call the manager callback URL.
+#   3. Wait for the HTTP Webhook timeout (PT2M = 2 minutes for testing).
+#   4. Logic App follows timeout branch → escalated.
+#   Screenshot: Logic App run showing timeout/escalated branch.
+###############################################################################
+
+POST https://{{namespace}}/{{queue}}/messages
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+BrokerProperties: {"Label": "expense-request"}
+
+{
+  "employee_name": "David Kim",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 800.00,
+  "category": "software",
+  "description": "Annual IDE license",
+  "manager_email": "manf0007@algonquinlive.com"
+}
+
+###############################################################################
+# Scenario 5: Missing required field → validation error → rejected
+###############################################################################
+
+POST https://{{namespace}}/{{queue}}/messages
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+BrokerProperties: {"Label": "expense-request"}
+
+{
+  "employee_name": "Eve Torres",
+  "amount": 200.00,
+  "category": "supplies",
+  "description": "Office supplies",
+  "manager_email": "manf0007@algonquinlive.com"
+}
+
+# Missing: employee_email
+# Expected: validation function returns valid=false → Logic App False branch → rejected
+# Screenshot: Logic App run showing False branch of validation condition.
+
+###############################################################################
+# Scenario 6: Invalid category → validation error → rejected
+###############################################################################
+
+POST https://{{namespace}}/{{queue}}/messages
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+BrokerProperties: {"Label": "expense-request"}
+
+{
+  "employee_name": "Frank Nguyen",
+  "employee_email": "manfouodamis00@gmail.com",
+  "amount": 75.00,
+  "category": "lunch",
+  "description": "Team lunch",
+  "manager_email": "manf0007@algonquinlive.com"
+}
+
+# "lunch" is not in VALID_CATEGORIES.
+# Expected: validation function returns valid=false → Logic App False branch → rejected
+# Screenshot: Logic App run showing False branch of validation condition.
