@@ -13,7 +13,7 @@ Publish
 *.cscfg
 *.Cache
 project.lock.json
-
+generate_pptx.py
 /packages
 /TestResults
 
